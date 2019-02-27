@@ -1,5 +1,6 @@
 package co.com.bu.inventariopdt.Ui
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -33,7 +34,8 @@ class MainActivity : AppCompatActivity() {
         if (usuario.toString().isNullOrEmpty() || contrasena.toString().isNullOrEmpty()) {
             Toast.makeText(this, "Digite campos vacios", Toast.LENGTH_LONG).show()
         } else {
-            Toast.makeText(this, usuario, Toast.LENGTH_LONG).show()
+            val intent = Intent(applicationContext,ContainerActivity::class.java)
+            startActivity(intent)
         }
 
     }
