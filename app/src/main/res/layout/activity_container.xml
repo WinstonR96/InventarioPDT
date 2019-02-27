@@ -31,6 +31,7 @@
             android:layout_gravity="center"
             android:textAlignment="center"
             android:text="Continuar"
-            android:id="@+id/btGuardarContainer"/>
+            android:id="@+id/btGuardarContainer"
+            android:onClick="Palet"/>
 
 </LinearLayout>
