@@ -31,12 +31,14 @@ class MainActivity : AppCompatActivity() {
     fun Iniciar(view: View) {
         var usuario = etUsuario?.text.toString()
         var contrasena = etContrasena?.text.toString()
-        if (usuario.toString().isNullOrEmpty() || contrasena.toString().isNullOrEmpty()) {
+        val intent = Intent(applicationContext,ContainerActivity::class.java)
+        startActivity(intent)
+        /*if (!usuario.toString().isNullOrEmpty() || contrasena.toString().isNullOrEmpty()) {
             Toast.makeText(this, "Digite campos vacios", Toast.LENGTH_LONG).show()
         } else {
             val intent = Intent(applicationContext,ContainerActivity::class.java)
             startActivity(intent)
-        }
+        }*/
 
     }
 
