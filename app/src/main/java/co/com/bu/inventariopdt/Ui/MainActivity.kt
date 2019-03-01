@@ -1,8 +1,11 @@
 package co.com.bu.inventariopdt.Ui
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -15,6 +18,8 @@ class MainActivity : AppCompatActivity() {
     private var etUsuario: EditText? = null
     private var etContrasena: EditText? = null
     private var btIniciar: Button? = null
+    private var permission: Int?=null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +30,12 @@ class MainActivity : AppCompatActivity() {
         etContrasena = findViewById(R.id.etContrasena)
         btIniciar = findViewById(R.id.btIniciar)
 
+        permission = ActivityCompat.checkSelfPermission(applicationContext,Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
+        if(permission != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(applicationContext, "Debe dar permisos", Toast.LENGTH_SHORT).show()
+            return
+        }
     }
 
     fun Iniciar(view: View) {
