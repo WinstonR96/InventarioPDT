@@ -1,6 +1,7 @@
 package co.com.bu.inventariopdt.Ui
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -8,7 +9,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import co.com.bu.inventariopdt.Core.Entorno
 import co.com.bu.inventariopdt.R
 
 class CajaActivity : AppCompatActivity() {
@@ -36,11 +36,20 @@ class CajaActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        val id = item?.itemId
+        var id = item?.itemId
         if(id==R.id.finalizar){
-            Entorno.getInstance()!!.setEstadoCajaFinalizado(sharedPreferences)
+            GuardarRegistro()
+        }
+        if(id==R.id.logout){
+            val intent = Intent(applicationContext,MainActivity::class.java)
+            finish()
+            startActivity(intent)
         }
         return true
+    }
+
+    private fun GuardarRegistro() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     fun Registrar(view: View){

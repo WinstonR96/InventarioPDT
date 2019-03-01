@@ -10,7 +10,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
-import co.com.bu.inventariopdt.Core.Entorno
 import co.com.bu.inventariopdt.R
 
 class ContainerActivity : AppCompatActivity() {
@@ -37,9 +36,29 @@ class ContainerActivity : AppCompatActivity() {
 
         if(id==R.id.logout){
             val intent = Intent(applicationContext,MainActivity::class.java)
+            finish()
             startActivity(intent)
         }
+
+        if(id==R.id.guardar){
+            GuardarConteo()
+        }
+
+        if(id==R.id.reporte){
+            GenerarReporte()
+        }
         return true
+    }
+
+    private fun GenerarReporte() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    private fun GuardarConteo() {
+        val editor = sharedPreferences?.edit()
+        editor?.putString("container", "0")
+        editor?.apply()
+        //TODO: implementar la logica de guardar el conteo en BD
     }
 
 
@@ -71,6 +90,8 @@ class ContainerActivity : AppCompatActivity() {
             intent.putExtra("container",data)
         startActivity(intent)
     }
+
+
 
 
 
