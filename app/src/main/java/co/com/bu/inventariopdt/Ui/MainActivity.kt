@@ -27,18 +27,18 @@ class MainActivity : AppCompatActivity() {
     private var recursos: Resources? = null
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         recursos = this.resources
-
         ComprobarPermisos()
 
 
         //Relacionamos cada atributo declarado anteriormente con el ID del widget
         etUsuario = findViewById(R.id.etUsuario)
         etContrasena = findViewById(R.id.etContrasena)
+
 
     }
 
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                             EXTERNAL_WRITE_CODE
                         )
                     }
-                    builder.setNegativeButton(recursos?.getString(R.string.cancelar)){dialog, which ->
+                    builder.setNegativeButton(recursos?.getString(R.string.cancelar)) { dialog, which ->
 
                     }
                     val dialog = builder.create()
@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
                             EXTERNAL_READ_CODE
                         )
                     }
-                    builder.setNegativeButton(recursos?.getString(R.string.cancelar)){dialog, which ->
+                    builder.setNegativeButton(recursos?.getString(R.string.cancelar)) { dialog, which ->
 
                     }
                     val dialog = builder.create()

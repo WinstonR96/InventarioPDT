@@ -15,11 +15,13 @@
     <string name="etCodigoContainer">Ingrese codigo Container</string>
     <string name="continuar">Continuar</string>
     <string name="guardar">Guardar</string>
-    <string name="reporte">Reporte</string>
+    <string name="reporte">Exportar Excel</string>
     <string name="logout">Cerrar sesion</string>
-    <string name="finalizar">Finalizar</string>
+    <string name="finalizar_palet">Finalizar Palet</string>
+    <string name="finalizar_container">Finalizar Container</string>
     <string name="etCodigoPalet">Ingrese codigo Palet</string>
     <string name="etCodigoCaja">Ingrese codigo Caja</string>
     <string name="vacioContainer">Ingrese un numero de container</string>
+    <string name="registroexitoso">Registrado</string>
 
 </resources>

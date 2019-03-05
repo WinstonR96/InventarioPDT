@@ -21,8 +21,8 @@ import java.lang.Exception
 class CajaActivity : AppCompatActivity() {
 
     private var etCaja: EditText? = null
-    private var container: String = ""
-    private var palet: String = ""
+    private var nro_container: String = ""
+    private var nro_palet: String = ""
     private var sharedPreferences: SharedPreferences? = null;
     private var recursos : Resources ?= null
     private val BD = "GUARDANDOBASEDEDATOS"
@@ -34,8 +34,8 @@ class CajaActivity : AppCompatActivity() {
         etCaja = findViewById(R.id.etCaja)
 
         //Capturo el valor enviado desde la activity anterior
-        container = intent.getStringExtra("container")
-        palet = intent.getStringExtra("palet")
+        nro_container = intent.getStringExtra("nro_container")
+        nro_palet = intent.getStringExtra("nro_palet")
 
         sharedPreferences = getSharedPreferences("info", Context.MODE_PRIVATE)
     }
@@ -60,18 +60,21 @@ class CajaActivity : AppCompatActivity() {
     }
 
     private fun GuardarRegistro() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val editor = sharedPreferences?.edit()
+        editor?.putString("estado_palet", "0")
+        editor?.apply()
+        val intent = Intent(applicationContext, PaletActivity::class.java)
+        startActivity(intent)
+        this.finish()
     }
 
     fun Registrar(view: View) {
-        val editor = sharedPreferences?.edit()
-        editor?.putString("caja", "1")
-        editor?.apply()
         var caja = etCaja?.text.toString()
-        if(caja.isEmpty()){
+        if(caja.isNullOrEmpty()){
             Toast.makeText(applicationContext,recursos?.getString(R.string.etCodigoCaja),Toast.LENGTH_SHORT).show()
         }else{
-            GuardarBaseDatosSqlite(container,palet,caja)
+            GuardarBaseDatosSqlite(nro_container,nro_palet,caja)
+            etCaja?.text = null
         }
     }
 
@@ -85,10 +88,10 @@ class CajaActivity : AppCompatActivity() {
         }
         try{
             val newRowId = db?.insert(InventarioContract.InventarioEntry.TABLE_NAME, null, values)
+            Toast.makeText(applicationContext, recursos?.getString(R.string.registroexitoso),Toast.LENGTH_SHORT).show()
         }catch (Ex:Exception){
             Toast.makeText(applicationContext,Ex.message,Toast.LENGTH_LONG).show()
             Log.e(BD,Ex.message)
         }
-
     }
 }

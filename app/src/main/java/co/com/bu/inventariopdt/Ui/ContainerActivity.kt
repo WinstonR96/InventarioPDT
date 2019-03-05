@@ -12,21 +12,26 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import co.com.bu.inventariopdt.R
+import android.os.Environment;
+import com.ajts.androidmads.library.SQLiteToExcel
+
 
 class ContainerActivity : AppCompatActivity() {
-
 
     private var etContainer : EditText ?= null
     private var sharedPreferences: SharedPreferences?= null;
     private var recursos: Resources?=null
+    private var directorio: String ?= null
+    private var sqliteToExcel: SQLiteToExcel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_container)
         recursos = this.resources
+        directorio = Environment.getExternalStorageState()
         etContainer = findViewById(R.id.etContainer)
         sharedPreferences = getSharedPreferences("info", Context.MODE_PRIVATE)
-        RespuestaEstado()
+        ValidarEstadoTransaccion()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -43,33 +48,25 @@ class ContainerActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        if(id==R.id.guardar){
-            GuardarConteo()
-        }
-
         if(id==R.id.reporte){
             GenerarReporte()
         }
         return true
     }
 
-    private fun GenerarReporte() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    private fun GuardarConteo() {
+    private fun VaciarData(){
         val editor = sharedPreferences?.edit()
-        editor?.putString("container", "0")
+        editor?.putString("estado_container", "")
+        editor?.putString("nro_container","")
         editor?.apply()
-        //TODO: implementar la logica de guardar el conteo en BD
     }
 
 
-    fun RespuestaEstado(){
-        var estadoContainer = sharedPreferences?.getString("container", " ")
-        var estadoPalet = sharedPreferences?.getString("palet", " ")
-        var container = sharedPreferences?.getString("Ncontainer"," ")
-        if(estadoPalet.equals("1")) {
+
+    fun ValidarEstadoTransaccion(){
+        var estadoContainer = sharedPreferences?.getString("estado_container", " ")
+        var container = sharedPreferences?.getString("nro_container"," ")
+        if(estadoContainer.equals("1")) {
             IrPalet(container)
         }
     }
@@ -80,9 +77,10 @@ class ContainerActivity : AppCompatActivity() {
             Toast.makeText(applicationContext,recursos?.getString(R.string.vacioContainer),Toast.LENGTH_SHORT).show()
         }else{
             val editor = sharedPreferences?.edit()
-            editor?.putString("container", "1")
-            editor?.putString("Ncontainer",container)
+            editor?.putString("estado_container", "1")
+            editor?.putString("nro_container",container)
             editor?.apply()
+            etContainer?.text=null
             IrPalet(container)
         }
     }
@@ -90,13 +88,25 @@ class ContainerActivity : AppCompatActivity() {
     fun IrPalet(data:String ?= null){
         val intent = Intent(applicationContext, PaletActivity::class.java)
         if(!data.isNullOrEmpty())
-            intent.putExtra("container",data)
+            intent.putExtra("nro_container",data)
         startActivity(intent)
+        this.finish()
     }
 
+    private fun GenerarReporte() {
+        sqliteToExcel = SQLiteToExcel(applicationContext,"inventario")
+        sqliteToExcel!!.exportAllTables("inventario.xls", object : SQLiteToExcel.ExportListener {
+            override fun onStart() {
 
+            }
 
+            override fun onCompleted(filePath: String) {
+                Toast.makeText(applicationContext,filePath,Toast.LENGTH_LONG).show()
+            }
 
-
-
+            override fun onError(e: Exception) {
+                Toast.makeText(applicationContext,e.message,Toast.LENGTH_LONG).show()
+            }
+        })
+    }
 }
