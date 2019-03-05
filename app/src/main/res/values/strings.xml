@@ -20,5 +20,6 @@
     <string name="finalizar">Finalizar</string>
     <string name="etCodigoPalet">Ingrese codigo Palet</string>
     <string name="etCodigoCaja">Ingrese codigo Caja</string>
+    <string name="vacioContainer">Ingrese un numero de container</string>
 
 </resources>

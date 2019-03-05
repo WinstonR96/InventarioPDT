@@ -3,6 +3,7 @@ package co.com.bu.inventariopdt.Ui
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Resources
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -17,10 +18,12 @@ class ContainerActivity : AppCompatActivity() {
 
     private var etContainer : EditText ?= null
     private var sharedPreferences: SharedPreferences?= null;
+    private var recursos: Resources?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_container)
+        recursos = this.resources
         etContainer = findViewById(R.id.etContainer)
         sharedPreferences = getSharedPreferences("info", Context.MODE_PRIVATE)
         RespuestaEstado()
@@ -63,9 +66,10 @@ class ContainerActivity : AppCompatActivity() {
 
 
     fun RespuestaEstado(){
-        var estado = sharedPreferences?.getString("container", " ")
+        var estadoContainer = sharedPreferences?.getString("container", " ")
+        var estadoPalet = sharedPreferences?.getString("palet", " ")
         var container = sharedPreferences?.getString("Ncontainer"," ")
-        if(estado.equals("1")) {
+        if(estadoPalet.equals("1")) {
             IrPalet(container)
         }
     }
@@ -73,9 +77,8 @@ class ContainerActivity : AppCompatActivity() {
     fun Palet(view: View){
         var container = etContainer?.text.toString()
         if(container.isNullOrEmpty()){
-            Toast.makeText(applicationContext,"Ingrese un numero de container",Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext,recursos?.getString(R.string.vacioContainer),Toast.LENGTH_SHORT).show()
         }else{
-            //Entorno.getInstance()?.setEstadoContainerInicializado(sharedPreferences)
             val editor = sharedPreferences?.edit()
             editor?.putString("container", "1")
             editor?.putString("Ncontainer",container)

@@ -59,9 +59,7 @@ class PaletActivity : AppCompatActivity() {
     }
 
     fun RespuestaEstado(){
-        var estado = sharedPreferences?.getString("palet", " ")
-        var container = sharedPreferences?.getString("Ncontainer"," ")
-        var palet = sharedPreferences?.getString("Npalet"," ")
+        var estado = sharedPreferences?.getString("caja", " ")
         if(estado.equals("1")) {
             IrCaja(container,palet)
         }
