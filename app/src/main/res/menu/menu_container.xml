@@ -5,19 +5,19 @@
 
     <item
             android:id="@+id/guardar"
-            android:title="Guardar"
+            android:title="@string/guardar"
             android:orderInCategory="100"
             app:showAsAction="never"/>
 
     <item
             android:id="@+id/reporte"
-            android:title="Reporte"
+            android:title="@string/reporte"
             android:orderInCategory="100"
             app:showAsAction="never"/>
 
     <item
             android:id="@+id/logout"
-            android:title="Cerrar sesion"
+            android:title="@string/logout"
             android:orderInCategory="100"
             app:showAsAction="never"/>
 </menu>

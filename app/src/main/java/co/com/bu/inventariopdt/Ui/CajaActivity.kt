@@ -8,11 +8,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import co.com.bu.inventariopdt.R
 
 class CajaActivity : AppCompatActivity() {
 
+    private var etCaja:EditText ?= null
     private var container:String = ""
     private var palet:String=""
     private var sharedPreferences: SharedPreferences ?= null;
@@ -20,6 +22,8 @@ class CajaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_caja)
+
+        etCaja = findViewById(R.id.etCaja)
 
         //Capturo el valor enviado desde la activity anterior
         container= intent.getStringExtra("container")
@@ -53,7 +57,8 @@ class CajaActivity : AppCompatActivity() {
     }
 
     fun Registrar(view: View){
-        Toast.makeText(applicationContext,"Guardando",Toast.LENGTH_SHORT).show()
+        var caja = etCaja?.text.toString()
+        Toast.makeText(applicationContext,"Container: ${container}\nPalet: ${palet}\nCaja: ${caja}",Toast.LENGTH_LONG).show()
 
     }
 }

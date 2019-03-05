@@ -10,7 +10,7 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ingrese codigo Palet"
+            android:text="@string/etCodigoPalet"
             android:layout_gravity="center"
             android:layout_marginTop="150dp"
             android:textSize="25dp"/>
@@ -29,7 +29,7 @@
             android:layout_marginTop="80dp"
             android:layout_gravity="center"
             android:textAlignment="center"
-            android:text="Continuar"
+            android:text="@string/continuar"
             android:id="@+id/btGuardarPalet"
             android:onClick="Caja"/>
 

@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">InventarioPDT</string>
+    <string name="concedido">Permiso ha sido concedido por el usuario</string>
+    <string name="denegado">Permiso ha sido denegado por el usuario</string>
+    <string name="noautorizado">Permiso no autorizado</string>
+    <string name="ok">Aceptar Permisos</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="requerido">Permiso requerido</string>
+    <string name="escritura">Permiso para escribir en la memoria es requerido, para poder guardar los resportes</string>
+    <string name="lectura">Permiso para leer en la memoria es requerido, para poder obtener los resportes</string>
+    <string name="vacio">Digite campos vacios</string>
+    <string name="ingreseusuario">Ingrese usuario</string>
+    <string name="ingresecontrasena">Ingrese contraseña</string>
+    <string name="iniciar">Iniciar</string>
+    <string name="etCodigoContainer">Ingrese codigo Container</string>
+    <string name="continuar">Continuar</string>
+    <string name="guardar">Guardar</string>
+    <string name="reporte">Reporte</string>
+    <string name="logout">Cerrar sesion</string>
+    <string name="finalizar">Finalizar</string>
+    <string name="etCodigoPalet">Ingrese codigo Palet</string>
+    <string name="etCodigoCaja">Ingrese codigo Caja</string>
+
 </resources>
