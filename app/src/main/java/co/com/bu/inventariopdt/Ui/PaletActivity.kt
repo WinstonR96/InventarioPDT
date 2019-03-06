@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.content.res.Resources
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -23,12 +24,15 @@ class PaletActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_palet)
+
+        sharedPreferences = getSharedPreferences("info", Context.MODE_PRIVATE)
+        ValidarEstadoTransaccion()
 
         recursos = this.resources
         etPalet = findViewById(R.id.etPalet)
-        sharedPreferences = getSharedPreferences("info", Context.MODE_PRIVATE)
-        ValidarEstadoTransaccion()
+
 
         //Capturo el valor enviado desde la activity anterior
         nro_Container= intent.getStringExtra("nro_container")
@@ -66,8 +70,8 @@ class PaletActivity : AppCompatActivity() {
         val intent = Intent(applicationContext,CajaActivity::class.java)
         intent.putExtra("nro_container",nro_container)
         intent.putExtra("nro_palet",nro_palet)
-        finish()
         startActivity(intent)
+        finish()
     }
 
     private fun GuardarRegistro() {
@@ -77,7 +81,7 @@ class PaletActivity : AppCompatActivity() {
         editor?.apply()
         val intent = Intent(applicationContext, ContainerActivity::class.java)
         startActivity(intent)
-        this.finish()
+        finish()
     }
 
     fun Caja(view:View){

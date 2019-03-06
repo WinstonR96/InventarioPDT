@@ -64,8 +64,9 @@ class CajaActivity : AppCompatActivity() {
         editor?.putString("estado_palet", "0")
         editor?.apply()
         val intent = Intent(applicationContext, PaletActivity::class.java)
+        intent.putExtra("nro_container",nro_container)
         startActivity(intent)
-        this.finish()
+        finish()
     }
 
     fun Registrar(view: View) {

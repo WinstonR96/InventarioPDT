@@ -27,11 +27,11 @@ class ContainerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_container)
+        sharedPreferences = getSharedPreferences("info", Context.MODE_PRIVATE)
+        ValidarEstadoTransaccion()
         recursos = this.resources
         directorio = Environment.getExternalStorageState()
         etContainer = findViewById(R.id.etContainer)
-        sharedPreferences = getSharedPreferences("info", Context.MODE_PRIVATE)
-        ValidarEstadoTransaccion()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -53,14 +53,6 @@ class ContainerActivity : AppCompatActivity() {
         }
         return true
     }
-
-    private fun VaciarData(){
-        val editor = sharedPreferences?.edit()
-        editor?.putString("estado_container", "")
-        editor?.putString("nro_container","")
-        editor?.apply()
-    }
-
 
 
     fun ValidarEstadoTransaccion(){
@@ -90,7 +82,7 @@ class ContainerActivity : AppCompatActivity() {
         if(!data.isNullOrEmpty())
             intent.putExtra("nro_container",data)
         startActivity(intent)
-        this.finish()
+        finish()
     }
 
     private fun GenerarReporte() {
