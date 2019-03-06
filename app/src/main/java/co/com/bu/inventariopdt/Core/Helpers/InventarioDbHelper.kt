@@ -1,6 +1,7 @@
 package co.com.bu.inventariopdt.Core.Helpers
 
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
@@ -28,6 +29,12 @@ class InventarioDbHelper(contexto:Context) : SQLiteOpenHelper(contexto, DATABASE
 
     override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         onUpgrade(db, oldVersion, newVersion)
+    }
+
+    fun getInventario() : Cursor{
+        var db : SQLiteDatabase = this.readableDatabase
+        var res: Cursor = db.rawQuery("select * from ${InventarioContract.InventarioEntry.TABLE_NAME}",null)
+        return res;
     }
 
     companion object {

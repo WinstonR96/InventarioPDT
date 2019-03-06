@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Resources
+import android.database.Cursor
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -13,7 +14,15 @@ import android.widget.EditText
 import android.widget.Toast
 import co.com.bu.inventariopdt.R
 import android.os.Environment;
-import com.ajts.androidmads.library.SQLiteToExcel
+import co.com.bu.inventariopdt.Core.Helpers.InventarioDbHelper
+import jxl.WorkbookSettings
+import java.io.File
+import java.lang.Exception
+import java.util.*
+import jxl.write.WritableWorkbook
+import jxl.Workbook
+import jxl.write.Label
+import jxl.write.WritableSheet
 
 
 class ContainerActivity : AppCompatActivity() {
@@ -22,7 +31,8 @@ class ContainerActivity : AppCompatActivity() {
     private var sharedPreferences: SharedPreferences?= null;
     private var recursos: Resources?=null
     private var directorio: String ?= null
-    private var sqliteToExcel: SQLiteToExcel? = null
+    private var TAG_FILE = "FILE"
+    private var FileName = "inventario.xls";
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +40,7 @@ class ContainerActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("info", Context.MODE_PRIVATE)
         ValidarEstadoTransaccion()
         recursos = this.resources
-        directorio = Environment.getExternalStorageState()
+        directorio = Environment.getExternalStorageDirectory().path+"/Reportes/"
         etContainer = findViewById(R.id.etContainer)
     }
 
@@ -86,19 +96,45 @@ class ContainerActivity : AppCompatActivity() {
     }
 
     private fun GenerarReporte() {
-        sqliteToExcel = SQLiteToExcel(applicationContext,"inventario")
-        sqliteToExcel!!.exportAllTables("inventario.xls", object : SQLiteToExcel.ExportListener {
-            override fun onStart() {
+        var DbHelper = InventarioDbHelper(applicationContext)
+        val cursor : Cursor = DbHelper.getInventario()
+        var sd : File = File(directorio)
+        if(!sd.exists()){
+            sd.mkdirs()
+        }
+        try{
+            var file:File = File(sd,FileName)
+            var workbookSettings: WorkbookSettings = WorkbookSettings()
+            var local : Locale = Locale("en","EN")
+            workbookSettings.locale = local
+            var workbook: WritableWorkbook
+            workbook = Workbook.createWorkbook(file,workbookSettings)
+            var sheetWritableSheet : WritableSheet  = workbook.createSheet("InventarioLista", 0);
+            sheetWritableSheet.addCell(Label(0, 0, "NroContenedor"));
+            sheetWritableSheet.addCell(Label(1, 0, "NroPalet"));
+            sheetWritableSheet.addCell(Label(2, 0, "NroCaja"));
 
+            if(cursor.moveToFirst()){
+                do {
+                    var NroContenedor = cursor.getString(cursor.getColumnIndex("NroContenedor"))
+                    var NroPalet = cursor.getString(cursor.getColumnIndex("NroPalet"))
+                    var NroCaja = cursor.getString(cursor.getColumnIndex("NroCaja"))
+                    var i = cursor.position + 1
+                    sheetWritableSheet.addCell(Label(0, i, NroContenedor));
+                    sheetWritableSheet.addCell(Label(1, i, NroPalet));
+                    sheetWritableSheet.addCell(Label(2, i, NroCaja));
+                }while (cursor.moveToNext())
             }
 
-            override fun onCompleted(filePath: String) {
-                Toast.makeText(applicationContext,filePath,Toast.LENGTH_LONG).show()
-            }
+            cursor.close()
+            workbook.write()
+            workbook.close()
+            Toast.makeText(applicationContext, "Excel generado", Toast.LENGTH_SHORT).show();
+        }catch (e:Exception){
+            Toast.makeText(applicationContext,e.message,Toast.LENGTH_LONG).show()
+        }
 
-            override fun onError(e: Exception) {
-                Toast.makeText(applicationContext,e.message,Toast.LENGTH_LONG).show()
-            }
-        })
     }
 }
+
+

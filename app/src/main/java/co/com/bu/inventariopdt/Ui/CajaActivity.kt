@@ -94,5 +94,6 @@ class CajaActivity : AppCompatActivity() {
             Toast.makeText(applicationContext,Ex.message,Toast.LENGTH_LONG).show()
             Log.e(BD,Ex.message)
         }
+        db.close()
     }
 }
